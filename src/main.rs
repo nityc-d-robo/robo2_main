@@ -7,7 +7,7 @@ const FREQUENCY: f64 = 1000.;
 const START_DUTY_CYCLE: f64 = 0.0;
 
 use std::net::UdpSocket;
-const RECV_ADDR: &str = "192.168.11.48:8080";
+const RECV_ADDR: &str = "0.0.0.0:8080";
 
 use serde::Deserialize;
 #[derive(Deserialize)]
