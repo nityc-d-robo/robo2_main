@@ -17,9 +17,11 @@ checksum = "97b3888a4aecf77e811145cadf6eef5901f4782c53886191b2f693f24761847c"
 [[package]]
 name = "motor_controller"
 version = "0.1.0"
-source = "git+https://github.com/nityc-d-robo/motor_controller?branch=lib-dev#f21fa695e10f28ce8315c339885fb5b90f5d58a6"
+source = "git+https://github.com/nityc-d-robo/motor_controller?rev=4d09feb4c32cad8f191f9d8d1ae19780f4e08c40#4d09feb4c32cad8f191f9d8d1ae19780f4e08c40"
 dependencies = [
  "rppal",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
