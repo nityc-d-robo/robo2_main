@@ -36,7 +36,11 @@ jobs:
       - name: check
         run: |
           pwd &&
-          ls target/
+          ls target/ &&
+          echo "target/arm-unknown-linux-gnueabihf/" &&
+          ls target/arm-unknown-linux-gnueabihf/ &&
+          echo "target/release/" &&
+          ls target/release/ &&
         shell: bash
       
 
