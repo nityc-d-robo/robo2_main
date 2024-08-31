@@ -1,4 +1,4 @@
-name: work space build test 
+name: work space build test
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
     branches: [ master ]
   schedule:
     - cron: '0 0 * * *'
+
 jobs:
   build_and_test:
     strategy:
@@ -33,21 +34,39 @@ jobs:
           cross build --target arm-unknown-linux-gnueabihf --release
         shell: bash
 
-      - name: check
-        run: |
-          pwd &&
-          ls target/ &&
-          echo "target/arm-unknown-linux-gnueabihf/" &&
-          ls 
-        shell: bash
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-binary
+          path: target/arm-unknown-linux-gnueabihf/release/
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
+  release:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: my-binary
+        
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: |
-            target/arm-unknown-linux-gnueabihf/release/robo2_main
-      
+          tag_name: ${{ github.ref_name }}
+          release_name: "Release ${{ github.ref_name }}"
+          draft: false
+          prerelease: false
 
-        
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/arm-unknown-linux-gnueabihf/release/robo2_main
+          asset_name: your_binary_name
+          asset_content_type: application/octet-stream
