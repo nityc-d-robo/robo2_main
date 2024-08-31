@@ -62,16 +62,11 @@ jobs:
           release_name: "Release ${{ github.ref_name }}"
           draft: false
           prerelease: false
-           
-      - name: tests
-        run: |
-           pwd &&
-           ls
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/arm-unknown-linux-gnueabihf/release/robo2_main
+          asset_path: robo2_main
           asset_name: your_binary_name
           asset_content_type: application/octet-stream
