@@ -38,9 +38,7 @@ jobs:
           pwd &&
           ls target/ &&
           echo "target/arm-unknown-linux-gnueabihf/" &&
-          ls target/arm-unknown-linux-gnueabihf/ &&
-          echo "target/release/" &&
-          ls target/release/ 
+          ls target/arm-unknown-linux-gnueabihf/release
         shell: bash
       
 
