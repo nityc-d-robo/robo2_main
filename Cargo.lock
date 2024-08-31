@@ -43,7 +43,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "robo1_main"
+name = "robo2_main"
 version = "0.1.0"
 dependencies = [
  "motor_controller",
