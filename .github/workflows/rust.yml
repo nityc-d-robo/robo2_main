@@ -1,13 +1,9 @@
-name: Rust
+name: Build and Release for Raspberry Pi Zero 2 W
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-
-env:
-  CARGO_TERM_COLOR: always
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -22,10 +18,15 @@ jobs:
           toolchain: stable
           target: arm-unknown-linux-gnueabihf
 
+      - name: Install rust-std for ARM
+        run: rustup target add arm-unknown-linux-gnueabihf
+
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y gcc-arm-linux-gnueabihf
 
       - name: Build for Raspberry Pi Zero 2 W
+        env:
+          RUSTFLAGS: "-C linker=arm-linux-gnueabihf-gcc"
         run: cargo build --release --target=arm-unknown-linux-gnueabihf
 
       - name: Upload Release Asset
@@ -52,4 +53,4 @@ jobs:
           body: "Release for Raspberry Pi Zero 2 W"
           draft: false
           prerelease: false
-          files: robo2_main_bin
+          files: your_binary_name
