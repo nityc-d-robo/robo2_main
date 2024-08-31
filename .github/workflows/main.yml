@@ -32,3 +32,12 @@ jobs:
           source "$HOME/.cargo/env" &&
           cross build --target arm-unknown-linux-gnueabihf --release
         shell: bash
+
+      - name: check
+        run: |
+          pwd &&
+          ls target/
+        shell: bash
+      
+
+        
