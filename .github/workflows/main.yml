@@ -38,8 +38,16 @@ jobs:
           pwd &&
           ls target/ &&
           echo "target/arm-unknown-linux-gnueabihf/" &&
-          ls target/arm-unknown-linux-gnueabihf/release
+          ls 
         shell: bash
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: |
+            target/arm-unknown-linux-gnueabihf/release/robo2_main
       
 
         
