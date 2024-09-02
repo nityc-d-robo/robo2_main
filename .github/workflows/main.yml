@@ -31,7 +31,7 @@ jobs:
       - name: Build tests
         run: |
           source "$HOME/.cargo/env" &&
-          cross build --target arm-unknown-linux-gnueabihf --release
+          cross build cargo build --release --target=aarch64-unknown-linux-gnu
         shell: bash
 
       - name: Release
