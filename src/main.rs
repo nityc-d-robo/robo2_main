@@ -1,15 +1,23 @@
-use motor_controller::{udp_communication,motor::Motor};
+use motor_controller::{
+    motor::{setup_motors, DualPwm},
+    udp_communication,
+};
 
 const FREQUENCY: f64 = 1000.;
 const START_DUTY_CYCLE: f64 = 0.0;
 fn main() {
-    let setup_motors = vec![
-        Motor::new(17, 18, START_DUTY_CYCLE, FREQUENCY),
-        Motor::new(27,22 , START_DUTY_CYCLE, FREQUENCY),
-        Motor::new(23,24, START_DUTY_CYCLE, FREQUENCY),
-        Motor::new(25,32  , START_DUTY_CYCLE, FREQUENCY),
-        Motor::new(16,26 , START_DUTY_CYCLE, FREQUENCY),
-        Motor::new(13,2 , START_DUTY_CYCLE, FREQUENCY),
+    let dualpwm_motors = vec![
+        DualPwm::new(18, 17, START_DUTY_CYCLE, FREQUENCY),
+        DualPwm::new(22, 27, START_DUTY_CYCLE, FREQUENCY),
+        DualPwm::new(24, 23, START_DUTY_CYCLE, FREQUENCY),
+        DualPwm::new(32, 25, START_DUTY_CYCLE, FREQUENCY),
+        DualPwm::new(26, 16, START_DUTY_CYCLE, FREQUENCY),
+        DualPwm::new(2, 13, START_DUTY_CYCLE, FREQUENCY),
     ];
-    udp_communication::run_motor(setup_motors, "60000");
+
+    let mut motors = setup_motors(dualpwm_motors);
+
+    loop {
+        udp_communication::recv_pwm_udp(&mut motors, "60000");
+    }
 }
